@@ -12,12 +12,17 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  english_words: ^4.0.0
   provider: ^6.0.0
+  bloc: ^8.0.3
+  flutter_bloc: ^8.1.6
+  equatable: ^2.0.3
+  sqflite: ^2.3.3+1
 
   flutter_localizations:
     sdk: flutter
 
+  flutter_gen: any
+  path: ^1.9.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
