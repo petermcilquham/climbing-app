@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/main.dart';
-import 'package:flutter_application_1/screens/page_three.dart';
-import 'package:flutter_application_1/screens/page_two.dart';
+import 'package:climbing_app/main.dart';
+import 'package:climbing_app/screens/page_three.dart';
+import 'package:climbing_app/screens/page_two.dart';
 
 class DrawerWidget extends StatelessWidget implements PreferredSizeWidget {
   const DrawerWidget({super.key});

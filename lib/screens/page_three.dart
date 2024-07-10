@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/main.dart';
-import 'package:flutter_application_1/screens/page_two.dart';
-import 'package:flutter_application_1/widgets/custom_app_bar.dart';
-import 'package:flutter_application_1/widgets/drawer_widget.dart';
+import 'package:climbing_app/main.dart';
+import 'package:climbing_app/screens/page_two.dart';
+import 'package:climbing_app/widgets/custom_app_bar.dart';
+import 'package:climbing_app/widgets/drawer_widget.dart';
 
 class PageThree extends StatelessWidget {
   const PageThree({super.key});

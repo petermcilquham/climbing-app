@@ -1,4 +1,4 @@
-name: flutter_application_1
+name: climbing_app
 description: "A new Flutter project."
 
 # Prevent accidental publishing to pub.dev.
@@ -17,12 +17,14 @@ dependencies:
   flutter_bloc: ^8.1.6
   equatable: ^2.0.3
   sqflite: ^2.3.3+1
+  cloud_firestore: ^5.1.0
 
   flutter_localizations:
     sdk: flutter
 
   flutter_gen: any
   path: ^1.9.0
+  firebase_core: ^3.1.1
 dev_dependencies:
   flutter_test:
     sdk: flutter

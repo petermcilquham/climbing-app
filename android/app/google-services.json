@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "798691128233",
+    "firebase_url": "https://climbing-app-2377b-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "climbing-app-2377b",
+    "storage_bucket": "climbing-app-2377b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:798691128233:android:ca786389d27c1c653fcab8",
+        "android_client_info": {
+          "package_name": "com.android.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwjXG1Qxvla0tkiRIOcspsG6IVPfBWZCM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

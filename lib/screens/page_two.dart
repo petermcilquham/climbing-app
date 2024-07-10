@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/screens/boulder_routes_page.dart';
-import 'package:flutter_application_1/widgets/custom_app_bar.dart';
-import 'package:flutter_application_1/widgets/drawer_widget.dart';
+import 'package:climbing_app/screens/boulder_routes_page.dart';
+import 'package:climbing_app/widgets/custom_app_bar.dart';
+import 'package:climbing_app/widgets/drawer_widget.dart';
 
 class PageTwo extends StatelessWidget {
   const PageTwo({super.key});
