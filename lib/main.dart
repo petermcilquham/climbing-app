@@ -1,5 +1,6 @@
+import 'package:climbing_app/bouldering_route_repository/bouldering_route_repository.dart';
 import 'package:flutter/material.dart';
-import 'package:climbing_app/models/bouldering_route.dart';
+import 'package:climbing_app/bouldering_route_repository/bouldering_route_model.dart';
 import 'package:climbing_app/widgets/custom_app_bar.dart';
 import 'package:climbing_app/widgets/drawer_widget.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -24,16 +25,6 @@ void main() async {
   runApp(const MyApp());
 }
 
-Future<DocumentReference> addDocument(
-    String routeName, List<double> difficulty) {
-  return FirebaseFirestore.instance
-      .collection('bouldering_routes')
-      .add(<String, dynamic>{
-    'routeName': routeName,
-    'difficulty': difficulty,
-  });
-}
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -52,21 +43,8 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatelessWidget {
-  final Map<String, dynamic> temp = {};
-
-  void getDocuments() {
-    FirebaseFirestore.instance.collection('bouldering_routes').get().then(
-      (querySnapshot) {
-        print("Successfully completed");
-        for (var docSnapshot in querySnapshot.docs) {
-          //print(docSnapshot.data());
-          temp.addAll(docSnapshot.data());
-          print(temp);
-        }
-      },
-      onError: (e) => print("Error completing: $e"),
-    );
-  }
+  final BoulderingRouteRepository _boulderingRouteRepository =
+      BoulderingRouteRepository();
 
   @override
   Widget build(BuildContext context) {
@@ -92,31 +70,12 @@ class MyHomePage extends StatelessWidget {
           ),
           ElevatedButton(
             onPressed: () {
-              addDocument("4a", [3.5, 4.1, 3.8]);
+              _boulderingRouteRepository.saveBoulderingRoute(
+                  boulderingRouteName: 'test',
+                  boulderingRouteDifficulty: [0.0]);
             },
             child: const Text("Add document to db"),
           ),
-          ElevatedButton(
-            onPressed: () {
-              getDocuments();
-            },
-            child: const Text("print documents from db"),
-          ),
-          SizedBox(
-            height: 200,
-            child: ListView.builder(
-              shrinkWrap: true,
-              itemCount: temp.length,
-              prototypeItem: const ListTile(
-                title: Text('Bouldering routes:'),
-              ),
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(temp.toString()),
-                );
-              },
-            ),
-          )
         ],
       ),
     );

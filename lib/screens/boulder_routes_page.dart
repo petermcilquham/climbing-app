@@ -4,9 +4,15 @@ import 'package:climbing_app/widgets/drawer_widget.dart';
 
 class BoulderRoutesPage extends StatelessWidget {
   const BoulderRoutesPage(
-      {super.key, required this.routeName, required this.routeColor});
+      {super.key,
+      required this.routeName,
+      required this.routeDifficulties,
+      required this.routeAvgDifficulty,
+      required this.routeColor});
 
   final String routeName;
+  final List<dynamic> routeDifficulties;
+  final double routeAvgDifficulty;
   final Color routeColor;
 
   double deviceWidth(BuildContext context) => MediaQuery.of(context).size.width;
@@ -22,6 +28,10 @@ class BoulderRoutesPage extends StatelessWidget {
       drawer: const DrawerWidget(),
       body: Column(
         children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 30),
+            child: Text('Route average difficulty: $routeAvgDifficulty'),
+          ),
           Padding(
             padding: const EdgeInsets.only(top: 30),
             child: Row(
