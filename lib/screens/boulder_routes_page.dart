@@ -1,9 +1,12 @@
+import 'package:climbing_app/bouldering_route_repository/bouldering_route_repository.dart';
+import 'package:climbing_app/widgets/number_picker_widget.dart';
+import 'package:climbing_app/widgets/wheel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:climbing_app/widgets/custom_app_bar.dart';
 import 'package:climbing_app/widgets/drawer_widget.dart';
 
 class BoulderRoutesPage extends StatelessWidget {
-  const BoulderRoutesPage(
+  BoulderRoutesPage(
       {super.key,
       required this.routeName,
       required this.routeDifficulties,
@@ -16,6 +19,43 @@ class BoulderRoutesPage extends StatelessWidget {
   final Color routeColor;
 
   double deviceWidth(BuildContext context) => MediaQuery.of(context).size.width;
+
+  final BoulderingRouteRepository _boulderingRouteRepository =
+      BoulderingRouteRepository();
+
+  Future<void> _dialogBuilder(BuildContext context) {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Rate the route:'),
+          content: const NumberPickerWidget(),
+          actions: <Widget>[
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: const Text('OK'),
+              onPressed: () {
+                _boulderingRouteRepository.editBoulderingRoute(
+                    boulderingRouteDifficulty: 3.1, routeID: 'route1');
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: const Text('No Thanks'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,24 +75,14 @@ class BoulderRoutesPage extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(top: 30),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 ElevatedButton(
-                  onPressed: () {
-                    const snackBar = SnackBar(
-                      content: Text('You flashed it!'),
-                    );
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                  },
+                  onPressed: () => _dialogBuilder(context),
                   child: const Text("Flashed"),
                 ),
                 ElevatedButton(
-                  onPressed: () {
-                    const snackBar = SnackBar(
-                      content: Text('You did it!'),
-                    );
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                  },
+                  onPressed: () => _dialogBuilder(context),
                   child: const Text("Done"),
                 )
               ],

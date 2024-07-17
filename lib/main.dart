@@ -71,10 +71,18 @@ class MyHomePage extends StatelessWidget {
           ElevatedButton(
             onPressed: () {
               _boulderingRouteRepository.saveBoulderingRoute(
-                  boulderingRouteName: 'test',
-                  boulderingRouteDifficulty: [0.0]);
+                  officialDifficulty: '6c',
+                  boulderingRouteDifficulty: [5.9, 6.7, 6.4],
+                  routeID: 'route4');
             },
             child: const Text("Add document to db"),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              _boulderingRouteRepository.editBoulderingRoute(
+                  boulderingRouteDifficulty: 3.5, routeID: 'route1');
+            },
+            child: const Text("Add value to difficulty array"),
           ),
         ],
       ),

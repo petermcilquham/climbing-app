@@ -1,5 +1,6 @@
 import 'package:climbing_app/bouldering_route_repository/bouldering_route_model.dart';
 import 'package:climbing_app/bouldering_route_repository/bouldering_route_repository.dart';
+import 'package:climbing_app/logic/route_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:climbing_app/screens/boulder_routes_page.dart';
 import 'package:climbing_app/widgets/custom_app_bar.dart';
@@ -47,25 +48,25 @@ class _PageTwoState extends State<PageTwo> {
           ? ListView.builder(
               itemCount: boulderingRoutesList.length,
               prototypeItem: ListTile(
-                title: Text(boulderingRoutesList.first.boulderingRouteName),
+                title: Text(boulderingRoutesList.first.officialDifficulty),
               ),
               itemBuilder: (context, index) {
                 return ListTile(
                   title: Center(
-                    child:
-                        Text(boulderingRoutesList[index].boulderingRouteName),
+                    child: Text(boulderingRoutesList[index].officialDifficulty),
                   ),
                   onTap: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) => BoulderRoutesPage(
                           routeName:
-                              boulderingRoutesList[index].boulderingRouteName,
+                              boulderingRoutesList[index].officialDifficulty,
                           routeDifficulties: boulderingRoutesList[index]
                               .boulderingRouteDifficulty,
                           routeAvgDifficulty:
                               boulderingRoutesList[index].avgDifficulty,
-                          routeColor: const Color.fromRGBO(255, 255, 255, 1),
+                          routeColor: RouteColors().getColorsBasedOnDifficulty(
+                              boulderingRoutesList[index].avgDifficulty),
                         ),
                       ),
                     );

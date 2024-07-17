@@ -12,7 +12,7 @@ class BoulderingRouteRepository {
 
     for (var boulderingRouteData in data.docs) {
       final BoulderingRoute boulderingRoute = BoulderingRoute(
-        boulderingRouteName: boulderingRouteData['routeName'],
+        officialDifficulty: boulderingRouteData['officialDifficulty'],
         boulderingRouteDifficulty: boulderingRouteData['difficulty'],
         avgDifficulty:
             (boulderingRouteData['difficulty'].reduce((a, b) => a + b)) /
@@ -24,16 +24,28 @@ class BoulderingRouteRepository {
   }
 
   Future<void> saveBoulderingRoute({
-    required String boulderingRouteName,
+    required String officialDifficulty,
     required List<dynamic> boulderingRouteDifficulty,
+    required String routeID,
   }) async {
-    await _firestore.collection('bouldering_routes').add(<String, dynamic>{
-      'routeName': boulderingRouteName,
+    // await _firestore.collection('bouldering_routes').add(<String, dynamic>{
+    //   'routeName': boulderingRouteName,
+    //   'difficulty': boulderingRouteDifficulty,
+    // });
+    await _firestore.collection('bouldering_routes').doc(routeID).set({
+      'officialDifficulty': officialDifficulty,
       'difficulty': boulderingRouteDifficulty
     });
   }
 
-  Future<void> editBoulderingRoute() async {}
+  Future<void> editBoulderingRoute({
+    required dynamic boulderingRouteDifficulty,
+    required String routeID,
+  }) async {
+    await _firestore.collection("bouldering_routes").doc(routeID).update({
+      'difficulty': FieldValue.arrayUnion([boulderingRouteDifficulty]),
+    });
+  }
 
   Future<void> deleteBoulderingRoute() async {}
 }
