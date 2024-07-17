@@ -1,14 +1,16 @@
 class BoulderingRoute {
   final String officialDifficulty;
   final List<dynamic> boulderingRouteDifficulty;
-  final double avgDifficulty;
-  final String routeID; //document name
+  final double? avgDifficulty;
+  final String? routeID; //document name
+  final Map<dynamic, dynamic>? gradingCount;
 
   BoulderingRoute({
     required this.officialDifficulty,
     required this.boulderingRouteDifficulty,
-    this.avgDifficulty = 0.0,
-    this.routeID = '',
+    this.avgDifficulty,
+    this.routeID,
+    this.gradingCount,
   });
 
   // Convert a BoulderingRoute into a Map. The keys must correspond to the names of the

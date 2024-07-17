@@ -14,8 +14,7 @@ class PageTwo extends StatefulWidget {
 }
 
 class _PageTwoState extends State<PageTwo> {
-  final BoulderingRouteRepository _boulderingRouteRepository =
-      BoulderingRouteRepository();
+  final BoulderingRouteRepository _boulderingRouteRepository = BoulderingRouteRepository();
 
   List<BoulderingRoute> boulderingRoutesList = <BoulderingRoute>[];
 
@@ -27,8 +26,7 @@ class _PageTwoState extends State<PageTwo> {
 
   Future<void> getBoulderingRoutes() async {
     try {
-      boulderingRoutesList =
-          await _boulderingRouteRepository.getBoulderingRoutes();
+      boulderingRoutesList = await _boulderingRouteRepository.getBoulderingRoutes();
       setState(() {});
     } catch (e) {
       print('Error fetching routes: $e');
@@ -59,14 +57,11 @@ class _PageTwoState extends State<PageTwo> {
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) => BoulderRoutesPage(
-                          routeName:
-                              boulderingRoutesList[index].officialDifficulty,
-                          routeDifficulties: boulderingRoutesList[index]
-                              .boulderingRouteDifficulty,
-                          routeAvgDifficulty:
-                              boulderingRoutesList[index].avgDifficulty,
-                          routeColor: RouteColors().getColorsBasedOnDifficulty(
-                              boulderingRoutesList[index].avgDifficulty),
+                          routeName: boulderingRoutesList[index].officialDifficulty,
+                          routeDifficulties: boulderingRoutesList[index].boulderingRouteDifficulty,
+                          routeAvgDifficulty: boulderingRoutesList[index].avgDifficulty!,
+                          routeColor: RouteColors().getColorsBasedOnDifficulty(boulderingRoutesList[index].avgDifficulty!),
+                          gradingCount: boulderingRoutesList[index].gradingCount!,
                         ),
                       ),
                     );
