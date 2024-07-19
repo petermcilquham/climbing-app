@@ -1,5 +1,6 @@
 import 'package:climbing_app/bouldering_route_repository/bouldering_route_model.dart';
 import 'package:climbing_app/bouldering_route_repository/bouldering_route_repository.dart';
+import 'package:climbing_app/logic/range_around_grade.dart';
 import 'package:climbing_app/logic/route_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:climbing_app/screens/boulder_routes_page.dart';
@@ -15,8 +16,9 @@ class PageTwo extends StatefulWidget {
 
 class _PageTwoState extends State<PageTwo> {
   final BoulderingRouteRepository _boulderingRouteRepository = BoulderingRouteRepository();
+  final RangeAroundGrade _rangeAroundGrade = RangeAroundGrade();
 
-  List<BoulderingRoute> boulderingRoutesList = <BoulderingRoute>[];
+  List<BoulderingRoute> _boulderingRoutesList = <BoulderingRoute>[];
 
   @override
   void initState() {
@@ -26,7 +28,8 @@ class _PageTwoState extends State<PageTwo> {
 
   Future<void> getBoulderingRoutes() async {
     try {
-      boulderingRoutesList = await _boulderingRouteRepository.getBoulderingRoutes();
+      _boulderingRoutesList = await _boulderingRouteRepository.getAll();
+      _boulderingRoutesList.sort((a, b) => a.routeName.compareTo(b.routeName));
       setState(() {});
     } catch (e) {
       print('Error fetching routes: $e');
@@ -42,26 +45,24 @@ class _PageTwoState extends State<PageTwo> {
         showProfile: true,
       ),
       drawer: const DrawerWidget(),
-      body: boulderingRoutesList.isNotEmpty
+      body: _boulderingRoutesList.isNotEmpty
           ? ListView.builder(
-              itemCount: boulderingRoutesList.length,
+              itemCount: _boulderingRoutesList.length,
               prototypeItem: ListTile(
-                title: Text(boulderingRoutesList.first.officialDifficulty),
+                title: Text(_boulderingRoutesList.first.routeName),
               ),
               itemBuilder: (context, index) {
                 return ListTile(
                   title: Center(
-                    child: Text(boulderingRoutesList[index].officialDifficulty),
+                    child: Text(_boulderingRoutesList[index].routeName),
                   ),
                   onTap: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) => BoulderRoutesPage(
-                          routeName: boulderingRoutesList[index].officialDifficulty,
-                          routeDifficulties: boulderingRoutesList[index].boulderingRouteDifficulty,
-                          routeAvgDifficulty: boulderingRoutesList[index].avgDifficulty!,
-                          routeColor: RouteColors().getColorsBasedOnDifficulty(boulderingRoutesList[index].avgDifficulty!),
-                          gradingCount: boulderingRoutesList[index].gradingCount!,
+                          routeName: _boulderingRoutesList[index].routeName,
+                          gradedDifficultiesMap:_rangeAroundGrade.getRangeAroundGrade(_boulderingRoutesList[index].routeName,_boulderingRoutesList[index].gradedDifficultiesMap!),
+                          routeColor: RouteColors().getColorsBasedOnDifficulty(_boulderingRoutesList[index].routeName),
                         ),
                       ),
                     );
@@ -73,7 +74,3 @@ class _PageTwoState extends State<PageTwo> {
     );
   }
 }
-
-// class PageTwo extends StatelessWidget {
-//   const PageTwo({super.key});
-// }

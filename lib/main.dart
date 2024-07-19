@@ -1,4 +1,7 @@
+import 'package:climbing_app/bouldering_route_repository/bouldering_route_model.dart';
 import 'package:climbing_app/bouldering_route_repository/bouldering_route_repository.dart';
+import 'package:climbing_app/logic/enum.dart';
+import 'package:climbing_app/logic/range_around_grade.dart';
 import 'package:flutter/material.dart';
 import 'package:climbing_app/widgets/custom_app_bar.dart';
 import 'package:climbing_app/widgets/drawer_widget.dart';
@@ -34,9 +37,12 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatelessWidget {
   final BoulderingRouteRepository _boulderingRouteRepository = BoulderingRouteRepository();
+  final RangeAroundGrade _rangeAroundGrade = RangeAroundGrade();
 
   @override
   Widget build(BuildContext context) {
+    List<BoulderingRoute> boulderingRoutesList = <BoulderingRoute>[];
+
     double deviceHeight(BuildContext context) => MediaQuery.of(context).size.height;
     double deviceWidth(BuildContext context) => MediaQuery.of(context).size.width;
 
@@ -56,15 +62,19 @@ class MyHomePage extends StatelessWidget {
           ),
           ElevatedButton(
             onPressed: () {
-              _boulderingRouteRepository.saveBoulderingRoute(officialDifficulty: '6c', boulderingRouteDifficulty: [5.9, 6.7, 6.4], routeID: 'route4');
+              _boulderingRouteRepository.saveBoulderingRoute(
+                routeID: 'route1',
+                routeName: '3',
+                gradedDifficulties: boulderingGradesEnum,
+              );
             },
-            child: const Text("Add document to db"),
+            child: const Text("Save boulderingRoute"),
           ),
           ElevatedButton(
             onPressed: () {
-              _boulderingRouteRepository.editBoulderingRoute(boulderingRouteDifficulty: 3.5, routeID: 'route1');
+              _boulderingRouteRepository.editBoulderingRoute(routeID: 'route5', gradedDifficulty: '6b+');
             },
-            child: const Text("Add value to difficulty array"),
+            child: const Text("Edit boulderingRoute"),
           ),
         ],
       ),

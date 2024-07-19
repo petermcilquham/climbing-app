@@ -6,23 +6,20 @@ import 'package:climbing_app/widgets/drawer_widget.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class BoulderRoutesPage extends StatelessWidget {
-  BoulderRoutesPage(
-      {super.key,
-      required this.routeName,
-      required this.routeDifficulties,
-      required this.routeAvgDifficulty,
-      required this.routeColor,
-      required this.gradingCount});
+  BoulderRoutesPage({
+    super.key,
+    required this.routeName,
+    required this.gradedDifficultiesMap,
+    required this.routeColor,
+  });
 
   final String routeName;
-  final List<dynamic> routeDifficulties;
-  final double routeAvgDifficulty;
+  final Map<dynamic, dynamic> gradedDifficultiesMap;
   final Color routeColor;
-  final Map<dynamic, dynamic> gradingCount;
-
-  double deviceWidth(BuildContext context) => MediaQuery.of(context).size.width;
 
   final BoulderingRouteRepository _boulderingRouteRepository = BoulderingRouteRepository();
+
+  double deviceWidth(BuildContext context) => MediaQuery.of(context).size.width;
 
   Future<void> _dialogBuilder(BuildContext context) {
     return showDialog<void>(
@@ -38,7 +35,8 @@ class BoulderRoutesPage extends StatelessWidget {
               ),
               child: const Text('OK'),
               onPressed: () {
-                _boulderingRouteRepository.editBoulderingRoute(boulderingRouteDifficulty: 3.2, routeID: 'route1');
+                // _boulderingRouteRepository.editBoulderingRoute(
+                //     boulderingRouteDifficulty: 3.2, routeID: 'route1');
                 Navigator.of(context).pop();
               },
             ),
@@ -60,7 +58,7 @@ class BoulderRoutesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<ChartData> chartData = [];
-    gradingCount.forEach((key, value) {
+    gradedDifficultiesMap.forEach((key, value) {
       chartData.add(ChartData(key, value));
     });
 
@@ -73,10 +71,6 @@ class BoulderRoutesPage extends StatelessWidget {
       drawer: const DrawerWidget(),
       body: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 30),
-            child: Text('Route average difficulty: $routeAvgDifficulty'),
-          ),
           Padding(
             padding: const EdgeInsets.only(top: 30),
             child: Row(
@@ -107,52 +101,35 @@ class BoulderRoutesPage extends StatelessWidget {
               children: [
                 SizedBox(
                   height: 100,
+                  width: deviceWidth(context) * 0.8,
                   child: SfCartesianChart(
                     plotAreaBorderWidth: 0,
-                    primaryXAxis: const NumericAxis(
-                      interval: 0.1,
-                      decimalPlaces: 1,
+                    primaryXAxis: const CategoryAxis(
+                      interval: 1,
+                      majorTickLines: MajorTickLines(width: 0.0),
                       majorGridLines: MajorGridLines(width: 0.0),
-                      tickPosition: TickPosition.inside,
                     ),
                     primaryYAxis: const NumericAxis(
-                      isVisible: false,
                       interval: 1,
-                      //majorGridLines: MajorGridLines(width: 0.0),
+                      isVisible: false,
                     ),
-                    series: <CartesianSeries<ChartData, num>>[
-                      ColumnSeries<ChartData, num>(
+                    series: <CartesianSeries>[
+                      ColumnSeries<ChartData, String>(
                         dataSource: chartData,
                         xValueMapper: (ChartData data, _) => data.x,
                         yValueMapper: (ChartData data, _) => data.y,
-                        width: 0.4,
-                        // spacing: 0.5,
+                        width: 0.6,
+                        dataLabelSettings: const DataLabelSettings(
+                            isVisible: true,
+                            //offset: Offset(0, -15),
+                            margin: EdgeInsets.all(0),
+                            borderRadius: 0,
+                            showZeroValue: false,
+                            labelPosition: ChartDataLabelPosition.inside),
                       )
                     ],
                   ),
                 ),
-                // Center(
-                //   child: SizedBox(
-                //     width: 400,
-                //     height: 100,
-                //     child: ListView.builder(
-                //       shrinkWrap: true,
-                //       scrollDirection: Axis.horizontal,
-                //       prototypeItem: SizedBox(
-                //         width: 80,
-                //         child: ListTile(
-                //           title: Text(routeDifficulties.first.toString()),
-                //         ),
-                //       ),
-                //       itemCount: routeDifficulties.length,
-                //       itemBuilder: (context, index) {
-                //         return ListTile(
-                //           title: Text(routeDifficulties[index].toString()),
-                //         );
-                //       },
-                //     ),
-                //   ),
-                // )
               ],
             ),
           ),
@@ -189,6 +166,6 @@ class BoulderRoutesPage extends StatelessWidget {
 
 class ChartData {
   ChartData(this.x, this.y);
-  final double x;
+  final String x;
   final int y;
 }
