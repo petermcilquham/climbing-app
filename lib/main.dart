@@ -1,11 +1,10 @@
-import 'package:climbing_app/bouldering_route_repository/bouldering_route_model.dart';
 import 'package:climbing_app/bouldering_route_repository/bouldering_route_repository.dart';
 import 'package:climbing_app/logic/enum.dart';
-import 'package:climbing_app/logic/range_around_grade.dart';
 import 'package:flutter/material.dart';
 import 'package:climbing_app/widgets/custom_app_bar.dart';
 import 'package:climbing_app/widgets/drawer_widget.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -15,34 +14,36 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  runApp(const MyApp());
+  runApp(MyApp(boulderingRouteRepository: BoulderingRouteRepository()));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({required this.boulderingRouteRepository, super.key});
+
+  final BoulderingRouteRepository boulderingRouteRepository;
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Climbing App',
-      theme: ThemeData(
-          useMaterial3: true,
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepOrange),
-          scaffoldBackgroundColor: const Color.fromARGB(255, 91, 114, 156)),
-      home: MyHomePage(),
-      debugShowCheckedModeBanner: false,
+    return RepositoryProvider(
+      create: (context) => BoulderingRouteRepository(),
+      child: MaterialApp(
+        title: 'Climbing App',
+        theme: ThemeData(
+            useMaterial3: true,
+            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepOrange),
+            scaffoldBackgroundColor: const Color.fromARGB(255, 91, 114, 156)),
+        home: MyHomePage(),
+        debugShowCheckedModeBanner: false,
+      ),
     );
   }
 }
 
 class MyHomePage extends StatelessWidget {
   final BoulderingRouteRepository _boulderingRouteRepository = BoulderingRouteRepository();
-  final RangeAroundGrade _rangeAroundGrade = RangeAroundGrade();
 
   @override
   Widget build(BuildContext context) {
-    List<BoulderingRoute> boulderingRoutesList = <BoulderingRoute>[];
-
     double deviceHeight(BuildContext context) => MediaQuery.of(context).size.height;
     double deviceWidth(BuildContext context) => MediaQuery.of(context).size.width;
 
@@ -75,6 +76,12 @@ class MyHomePage extends StatelessWidget {
               _boulderingRouteRepository.editBoulderingRoute(routeID: 'route5', gradedDifficulty: '6b+');
             },
             child: const Text("Edit boulderingRoute"),
+          ),
+          ElevatedButton(
+            onPressed: () async {
+              print(await _boulderingRouteRepository.getBoulderingRouteGradedDifficultiesMapByRouteID('route5'));
+            },
+            child: const Text("Get boulderingRoute by roueID"),
           ),
         ],
       ),

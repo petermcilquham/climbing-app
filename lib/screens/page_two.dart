@@ -1,11 +1,12 @@
+import 'package:climbing_app/bouldering_route_bloc/bouldering_route_bloc.dart';
 import 'package:climbing_app/bouldering_route_repository/bouldering_route_model.dart';
 import 'package:climbing_app/bouldering_route_repository/bouldering_route_repository.dart';
-import 'package:climbing_app/logic/range_around_grade.dart';
 import 'package:climbing_app/logic/route_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:climbing_app/screens/boulder_routes_page.dart';
 import 'package:climbing_app/widgets/custom_app_bar.dart';
 import 'package:climbing_app/widgets/drawer_widget.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PageTwo extends StatefulWidget {
   const PageTwo({super.key});
@@ -16,7 +17,6 @@ class PageTwo extends StatefulWidget {
 
 class _PageTwoState extends State<PageTwo> {
   final BoulderingRouteRepository _boulderingRouteRepository = BoulderingRouteRepository();
-  final RangeAroundGrade _rangeAroundGrade = RangeAroundGrade();
 
   List<BoulderingRoute> _boulderingRoutesList = <BoulderingRoute>[];
 
@@ -59,10 +59,13 @@ class _PageTwoState extends State<PageTwo> {
                   onTap: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => BoulderRoutesPage(
-                          routeName: _boulderingRoutesList[index].routeName,
-                          gradedDifficultiesMap:_rangeAroundGrade.getRangeAroundGrade(_boulderingRoutesList[index].routeName,_boulderingRoutesList[index].gradedDifficultiesMap!),
-                          routeColor: RouteColors().getColorsBasedOnDifficulty(_boulderingRoutesList[index].routeName),
+                        builder: (context) => BlocProvider(
+                          create: (context) => BoulderingRouteBloc(context.read<BoulderingRouteRepository>()),
+                          child: BoulderRoutesPage(
+                            routeID: _boulderingRoutesList[index].routeID!,
+                            routeName: _boulderingRoutesList[index].routeName,
+                            routeColor: RouteColors().getColorsBasedOnDifficulty(_boulderingRoutesList[index].routeName),
+                          ),
                         ),
                       ),
                     );

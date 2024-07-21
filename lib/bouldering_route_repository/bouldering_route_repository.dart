@@ -11,13 +11,23 @@ class BoulderingRouteRepository {
 
     for (var boulderingRouteData in data.docs) {
       final BoulderingRoute boulderingRoute = BoulderingRoute(
+        routeID: boulderingRouteData.id,
         routeName: boulderingRouteData['routeName'],
         gradedDifficultiesMap: boulderingRouteData['gradedDifficultiesMap'],
       );
       fetchedBoulderingRoutes.add(boulderingRoute);
     }
-    
+
     return fetchedBoulderingRoutes;
+  }
+
+  Future<Map<dynamic, dynamic>> getBoulderingRouteGradedDifficultiesMapByRouteID(String routeID) async {
+    Map<dynamic, dynamic> fetchedBoulderingRouteGradedDifficultiesMap = {};
+
+    final DocumentSnapshot data = await _firestore.collection('bouldering_routes').doc(routeID).get();
+
+    fetchedBoulderingRouteGradedDifficultiesMap = data['gradedDifficultiesMap'];
+    return fetchedBoulderingRouteGradedDifficultiesMap;
   }
 
   Future<void> saveBoulderingRoute({

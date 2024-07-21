@@ -269,14 +269,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.3"
-  infinite_listview:
-    dependency: transitive
-    description:
-      name: infinite_listview
-      sha256: f6062c1720eb59be553dfa6b89813d3e8dd2f054538445aaa5edaddfa5195ce6
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.1.0"
   intl:
     dependency: transitive
     description:
@@ -365,14 +357,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.0"
-  numberpicker:
-    dependency: "direct main"
-    description:
-      name: numberpicker
-      sha256: "4c129154944b0f6b133e693f8749c3f8bfb67c4d07ef9dcab48b595c22d1f156"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.1.2"
   package_config:
     dependency: transitive
     description:
@@ -498,6 +482,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "26.1.42"
+  syncfusion_flutter_sliders:
+    dependency: "direct main"
+    description:
+      name: syncfusion_flutter_sliders
+      sha256: "48732897c03c28f41ac7607b59e1026e3e40733bf661d2e5c5eae3d4b69e19d3"
+      url: "https://pub.dev"
+    source: hosted
+    version: "26.1.42"
   synchronized:
     dependency: transitive
     description:
@@ -586,22 +578,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.5.1"
-  wheel_chooser:
-    dependency: transitive
-    description:
-      name: wheel_chooser
-      sha256: "3fee36f081f321c58a0b7b4afcdd92599f2ca520b3a1420084774e6b19cca1d8"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.1.2"
-  wheel_slider:
-    dependency: "direct main"
-    description:
-      name: wheel_slider
-      sha256: "63a4cdfeb262d5c5bce2f59b6488b070c192960dcd789e9344a80e1e29ca6c2c"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.2.1"
   xml:
     dependency: transitive
     description:
